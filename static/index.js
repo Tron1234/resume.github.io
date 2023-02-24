@@ -1,5 +1,4 @@
-import { debounce, throttle } from './utils.js'
-import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration } from './ZH_CN.js'
+import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration } from '../lang/ZH_CN.js'
 // 上一个动画完成的时间,第一页动画是否结束
 let lastTime = 0, isFirstEnd = false
 // 获取csss设置的变量值

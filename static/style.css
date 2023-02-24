@@ -497,7 +497,7 @@
 
     @font-face {
       font-family: 'brush-script-mt';
-      src: url('./BRUSHSCI.ttf');
+      src: url('../static/BRUSHSCI.ttf');
     }
 
     .article-end {
