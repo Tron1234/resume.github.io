@@ -83,7 +83,7 @@ function typing() {
     function createDom(tag, content, time, lastTime, last = false) {
       const dom = document.createElement(tag)
       dom.innerText = content
-      dom.style = `animation: ${last ? ('typing_last_' + (i === 1 ? 2 : 3)) : 'typing'} ${time}s steps(${content.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
+      dom.style = `animation: ${last ? ('typing_last_' + (i === 1 ? 1 : 3)) : 'typing'} ${time}s steps(${content.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
       return dom
     }
   }
@@ -176,13 +176,9 @@ function event() {
         // 下一页
         switch (pagination.index) {
           case 0:
-            document.documentElement.scrollTo(0, 0)
-            // 打开盒子并展示盒子最上页
-            setTimeout(() => {
-              document.getElementsByTagName('main')[0].style = "overflow: hidden;height: 100vh;"
-              document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
-              document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift')
-            }, boxSecond)
+            document.getElementsByTagName('main')[0].style = "overflow: hidden;height: 100vh;"
+            document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
+            document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift')
             break
           case 1:
             // 右移
@@ -220,19 +216,14 @@ function event() {
         // 上一页
         switch (pagination.index) {
           case 1:
+            // 需要保留open-gift动画
+            document.getElementsByClassName('gift')[0].classList.remove('large-gift')
+            document.getElementsByClassName('gift')[0].classList.add('small-gift')
             setTimeout(() => {
-              // 需要保留open-gift动画
-              document.getElementsByClassName('gift')[0].classList.remove('large-gift')
-              document.getElementsByClassName('gift')[0].classList.add('small-gift')
+              document.getElementsByClassName('gift')[0].classList.add('close-gift')
               setTimeout(() => {
-                document.documentElement.scrollTo({
-                  top: document.documentElement.scrollHeight - document.documentElement.clientHeight,
-                  left: 0,
-                  behavior: "smooth"
-                })
-                document.getElementsByClassName('gift')[0].classList.add('close-gift')
-              }, boxSecond)
-              document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;height: auto;'
+                document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;height: auto;'
+              }, 1000 - boxSecond)
             }, boxSecond)
             break
           case 2:
