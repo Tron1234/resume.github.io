@@ -20,7 +20,7 @@ function typing() {
   const selfAssessment_dom = document.getElementById('selfAssessment')
   title_dom.innerText = selfAssessment_title
   // 每个词需要的时间，单位秒
-  const wordTime = 0.1
+  const wordTime = 0.2 
   //文本宽度
   const fontSize = Number(getComputedStyle(root).getPropertyValue("--fontSize").replace('px', '')) + 2
   // web端百分比
@@ -38,7 +38,8 @@ function typing() {
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
     document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;height: auto;'
-    document.documentElement.scrollTo({
+    const dom = document.documentElement || document.body || window
+    dom.scrollTo({
       top: document.getElementById('title').offsetTop - 40,
       left: 0,
       behavior: "smooth"
@@ -265,7 +266,7 @@ function event() {
     if (down) {
       // 没有触底不做向下翻页操作
       if(!pagination.index){
-        alert(scrollTop , clientHeight , threshold , scrollHeight)
+        alert(scrollTop +","+ clientHeight +","+ threshold +","+ scrollHeight)
       }
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
