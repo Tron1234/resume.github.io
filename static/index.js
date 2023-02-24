@@ -39,7 +39,7 @@ function typing() {
   setTimeout(() => {
     document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;height: auto;'
     document.documentElement.scrollTo({
-      top: document.getElementById('title').offsetTop,
+      top: document.getElementById('title').offsetTop - 40,
       left: 0,
       behavior: "smooth"
     })
@@ -264,6 +264,9 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
+      if(!pagination.index){
+        alert(scrollTop , clientHeight , threshold , scrollHeight)
+      }
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
@@ -276,26 +279,6 @@ function event() {
       pagination.index--
     }
   }
-
-  // c = element to scroll to or top position in pixels
-  // e = duration of the scroll in ms, time scrolling
-  // d = (optative) ease function. Default easeOutCuaic
-  function scrollTo(c, e, d) {
-    d || (d = easeOutCuaic);
-    var a = document.documentElement;
-    if (0 === a.scrollTop) {
-      var b = a.scrollTop;
-      ++a.scrollTop; a = b + 1 === a.scrollTop-- ? a : document.body
-    }
-    b = a.scrollTop; 0 >= e || ("object" === typeof b && (b = b.offsetTop),
-      "object" === typeof c && (c = c.offsetTop), function (a, b, c, f, d, e, h) {
-        function g() {
-          0 > f || 1 < f || 0 >= d ? a.scrollTop = c : (a.scrollTop = b - (b - c) * h(f),
-            f += d * e, setTimeout(g, e))
-        } g()
-      }(a, b, c, 0, 1 / e, 20, d))
-  };
-  function easeOutCuaic(t) { t--; return t * t * t + 1; }
 }
 
 window.onload = initAni()
