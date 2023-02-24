@@ -20,7 +20,7 @@ function typing() {
   const selfAssessment_dom = document.getElementById('selfAssessment')
   title_dom.innerText = selfAssessment_title
   // 每个词需要的时间，单位秒
-  const wordTime = 0.2 
+  const wordTime = 0.12
   //文本宽度
   const fontSize = Number(getComputedStyle(root).getPropertyValue("--fontSize").replace('px', '')) + 2
   // web端百分比
@@ -118,11 +118,10 @@ function event() {
 
   // 可视区高度
   const clientHeight =
-    document.documentElement.clientHeight || document.body.clientHeight
+    document.getElementsByTagName('main')[0].clientHeight
   // 滚动条总高度
   const scrollHeight =
     document.getElementsByTagName('main')[0].scrollHeight
-
   let down = true // 定义一个标志，当滚轮向下滚时，执行一些操作
   let lastFlag = false // 上一次滚动时间
   let timer = null
@@ -265,9 +264,6 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
-      if(!pagination.index){
-        alert(scrollTop +","+ clientHeight +","+ threshold +","+ scrollHeight)
-      }
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
