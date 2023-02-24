@@ -59,7 +59,7 @@ function typing() {
       while (textIndex < text.length) {
         const str = text[textIndex] // 当前文字
         if (/[a-zA-Z0-9]/.test(str)) {
-          length += (fontSize / 1.5)
+          length += (fontSize / 1.9)
         } else {
           length += fontSize
         }
@@ -76,7 +76,7 @@ function typing() {
       }
       const str = text.slice(lastIndex)
       const time = str.length * wordTime
-      root.style.setProperty('--lastRowWidth' + (i === 1 ? 1 : 3), str.length + (i === 1 ? 2 : 4) + 'em')
+      root.style.setProperty('--lastRowWidth' + (i === 1 ? 1 : 3), str.length + 2 + 'em')
       dom.appendChild(createDom('div', str, time, lastTime, true))
       lastTime += time
     }
@@ -139,7 +139,7 @@ function event() {
     clearTimeout(timer)
     timer = setTimeout(() => {
       lastFlag = false
-    }, 100)
+    }, 300)
   }
 
   let startClientY, threshold = 20 // 触摸时的位置，手指触摸的阈值
@@ -163,7 +163,7 @@ function event() {
     clearTimeout(timer)
     timer = setTimeout(() => {
       lastFlag = false
-    }, 100)
+    }, 300)
   }
 
   const pagination = { _index: 0 }
@@ -264,6 +264,7 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
+      alert(scrollTop +','+ clientHeight +','+ threshold +','+ scrollHeight);
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
