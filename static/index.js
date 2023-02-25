@@ -262,7 +262,7 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
-      console.log(scrollTop + ',' + clientHeight + ',' + threshold + ',' + scrollHeight);
+      alert(scrollTop + ',' + clientHeight + ',' + threshold + ',' + scrollHeight);
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
