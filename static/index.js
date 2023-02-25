@@ -3,7 +3,6 @@ import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration }
 let lastTime = 0, isFirstEnd = false
 // 获取csss设置的变量值
 const root = document.querySelector(":root")
-const articleHeight = document.getElementsByTagName('article')[0].clientHeight+80
 function initAni() {
   // 打字机
   typing()
@@ -37,7 +36,7 @@ function typing() {
   const time = selfAssessment_title.length * wordTime
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
-    document.getElementsByTagName('main')[0].style = `overflow: hidden auto;height:${articleHeight}px`
+    document.getElementsByTagName('main')[0].style = `overflow: hidden auto;`
     scrollTo(document.getElementById('title').offsetTop - 40, 350)
   }, lastTime * 1000)
   lastTime += time
@@ -220,7 +219,7 @@ function event() {
               document.getElementsByClassName('gift')[0].classList.add('close-gift')
               scrollTo(scrollHeight - clientHeight, boxSecond)
               setTimeout(() => {
-                document.getElementsByTagName('main')[0].style = `overflow: hidden auto;height:${articleHeight}px`
+                document.getElementsByTagName('main')[0].style = `overflow: hidden auto;`
               }, 1000 - boxSecond)
             }, boxSecond)
             break
