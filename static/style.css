@@ -22,27 +22,30 @@
       margin: 0;
     }
 
+    html {
+      overflow: hidden;
+      width: 100%;
+    }
+
     body {
       background-color: rgb(249, 246, 203);
       scrollbar-width: none;
       -ms-overflow-style: none;
-      margin: 0;
-      height: calc(100% + 1px);
-      overflow: hidden;
+      position: fixed;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
     }
 
     main {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
       padding-top: 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
       box-sizing: border-box;
       overflow: hidden;
+      -webkit-overflow-scrolling: touch;
     }
 
     .article {
