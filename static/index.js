@@ -38,11 +38,7 @@ function typing() {
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
     document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;'
-    document.getElementsByTagName('main')[0].scrollTo({
-      top: document.getElementById('title').offsetTop - 40,
-      left: 0,
-      behavior: "smooth"
-    })
+    scrollTo(document.getElementById('title').offsetTop - 40, 350)
   }, lastTime * 1000)
   lastTime += time
   hanlderChild(selfAssessment_dom, selfAssessment)
@@ -174,11 +170,7 @@ function event() {
         // 下一页
         switch (pagination.index) {
           case 0:
-            document.getElementsByTagName('main')[0].scrollTo({
-              top: 0,
-              left: 0,
-              behavior: 'smooth'
-            })
+            scrollTo(0, boxSecond)
             setTimeout(() => {
               document.getElementsByTagName('main')[0].style = "overflow: hidden;"
               document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
@@ -226,11 +218,7 @@ function event() {
             document.getElementsByClassName('gift')[0].classList.add('small-gift')
             setTimeout(() => {
               document.getElementsByClassName('gift')[0].classList.add('close-gift')
-              document.getElementsByTagName('main')[0].scrollTo({
-                top: scrollHeight - clientHeight,
-                left: 0,
-                behavior: 'smooth'
-              })
+              scrollTo(scrollHeight - clientHeight, boxSecond)
               setTimeout(() => {
                 document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;'
               }, 1000 - boxSecond)
@@ -274,7 +262,7 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
-      console.log(scrollTop+','+clientHeight+','+threshold+','+scrollHeight);
+      console.log(scrollTop + ',' + clientHeight + ',' + threshold + ',' + scrollHeight);
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
@@ -288,5 +276,25 @@ function event() {
     }
   }
 }
+
+// c = element to scroll to or top position in pixels
+// e = duration of the scroll in ms, time scrolling
+// d = (optative) ease function. Default easeOutCuaic
+function scrollTo(c, e, d) {
+  d || (d = easeOutCuaic);
+  var a = document.getElementsByTagName('main')[0];
+  if (0 === a.scrollTop) {
+    var b = a.scrollTop;
+    ++a.scrollTop; a = b + 1 === a.scrollTop-- ? a : document.body
+  }
+  b = a.scrollTop; 0 >= e || ("object" === typeof b && (b = b.offsetTop),
+    "object" === typeof c && (c = c.offsetTop), function (a, b, c, f, d, e, h) {
+      function g() {
+        0 > f || 1 < f || 0 >= d ? a.scrollTop = c : (a.scrollTop = b - (b - c) * h(f),
+          f += d * e, setTimeout(g, e))
+      } g()
+    }(a, b, c, 0, 1 / e, 20, d))
+};
+function easeOutCuaic(t) { t--; return t * t * t + 1; }
 
 window.onload = initAni()
