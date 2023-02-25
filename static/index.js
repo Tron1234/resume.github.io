@@ -36,7 +36,7 @@ function typing() {
   const time = selfAssessment_title.length * wordTime
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
-    document.getElementsByTagName('main')[0].style = `overflow: hidden auto;`
+    document.body.style = `overflow: hidden auto;`
     scrollTo(document.getElementById('title').offsetTop - 40, 350)
   }, lastTime * 1000)
   lastTime += time
@@ -112,10 +112,10 @@ function event() {
 
   // 可视区高度
   const clientHeight =
-    document.getElementsByTagName('main')[0].clientHeight
+    document.body.clientHeight
   // 滚动条总高度
   const scrollHeight =
-    document.getElementsByTagName('main')[0].scrollHeight
+    document.body.scrollHeight
   let down = true // 定义一个标志，当滚轮向下滚时，执行一些操作
   let lastFlag = false // 上一次滚动时间
   let timer = null
@@ -124,7 +124,7 @@ function event() {
       lastFlag = true
       // 距顶部
       const scrollTop =
-        document.getElementsByTagName('main')[0].scrollTop
+        document.body.scrollTop
       down = e.wheelDelta ? e.wheelDelta < 0 : e.detail > 0;
       turnPage(scrollTop)
       return
@@ -146,7 +146,7 @@ function event() {
       lastFlag = true
       // 距顶部
       const scrollTop =
-        document.getElementsByTagName('main')[0].scrollTop
+        document.body.scrollTop
       const temp = startClientY - e.changedTouches[0].clientY
       if (Math.abs(temp) <= threshold) return
       down = temp > 0
@@ -171,7 +171,7 @@ function event() {
           case 0:
             scrollTo(0, boxSecond)
             setTimeout(() => {
-              document.getElementsByTagName('main')[0].style = "overflow: hidden;"
+              document.body.style = "overflow: hidden;"
               document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
               document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift')
             }, boxSecond)
@@ -219,7 +219,7 @@ function event() {
               document.getElementsByClassName('gift')[0].classList.add('close-gift')
               scrollTo(scrollHeight - clientHeight, boxSecond)
               setTimeout(() => {
-                document.getElementsByTagName('main')[0].style = `overflow: hidden auto;`
+                document.body.style = `overflow: hidden auto;`
               }, 1000 - boxSecond)
             }, boxSecond)
             break
@@ -245,7 +245,7 @@ function event() {
             document.getElementsByClassName('gift-box')[0].classList.remove('gift-box-translate')
             document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
             document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift', 'gift-right', 'gift-left-bottom', 'gift-left-top', 'gift-right-top', 'gift-top')
-            document.getElementsByTagName('main')[0].style = "overflow: hidden;"
+            document.body.style = "overflow: hidden;"
             break
         }
       }
@@ -281,7 +281,7 @@ function event() {
 // d = (optative) ease function. Default easeOutCuaic
 function scrollTo(c, e, d) {
   d || (d = easeOutCuaic);
-  var a = document.getElementsByTagName('main')[0];
+  var a = document.documentElement;
   if (0 === a.scrollTop) {
     var b = a.scrollTop;
     ++a.scrollTop; a = b + 1 === a.scrollTop-- ? a : document.body
