@@ -57,7 +57,7 @@
       font-size: var(--fontSize);
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 560px) {
       .article {
         width: var(--mobilePercent);
       }
@@ -354,7 +354,13 @@
     }
 
     .gift-box-translate {
-      transform: translateY(-60vh);
+      transform: translateY(-40vh);
+    }
+    
+    @media screen and (max-width: 560px) {
+      .gift-box-translate {
+        transform: translateY(-60vh);
+      }
     }
 
     .large-gift {
