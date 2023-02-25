@@ -140,7 +140,7 @@ function event() {
     }, 250)
   }
 
-  let startClientY, threshold = 20 // 触摸时的位置，手指触摸的阈值
+  let startClientY, threshold = 80 // 触摸时的位置，手指触摸的阈值
 
   function touchstart(e) {
     startClientY = e.changedTouches[0].clientY
@@ -274,7 +274,7 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
-      alert(scrollTop+','+clientHeight+','+threshold+','+scrollHeight);
+      console.log(scrollTop+','+clientHeight+','+threshold+','+scrollHeight);
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
