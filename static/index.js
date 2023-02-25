@@ -37,7 +37,7 @@ function typing() {
   const time = selfAssessment_title.length * wordTime
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
-    document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;height: auto;'
+    document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;'
     const dom = document.documentElement || document.body || window
     dom.scrollTo({
       top: document.getElementById('title').offsetTop - 40,
@@ -130,8 +130,7 @@ function event() {
       lastFlag = true
       // 距顶部
       const scrollTop =
-        document.documentElement.scrollTop
-      e = e || window.event;
+        document.getElementsByTagName('main')[0].scrollTop
       down = e.wheelDelta ? e.wheelDelta < 0 : e.detail > 0;
       turnPage(scrollTop)
       return
@@ -139,7 +138,7 @@ function event() {
     clearTimeout(timer)
     timer = setTimeout(() => {
       lastFlag = false
-    }, 300)
+    }, 250)
   }
 
   let startClientY, threshold = 20 // 触摸时的位置，手指触摸的阈值
@@ -153,7 +152,7 @@ function event() {
       lastFlag = true
       // 距顶部
       const scrollTop =
-        document.documentElement.scrollTop
+        document.getElementsByTagName('main')[0].scrollTop
       const temp = startClientY - e.changedTouches[0].clientY
       if (Math.abs(temp) <= threshold) return
       down = temp > 0
@@ -163,7 +162,7 @@ function event() {
     clearTimeout(timer)
     timer = setTimeout(() => {
       lastFlag = false
-    }, 300)
+    }, 250)
   }
 
   const pagination = { _index: 0 }
@@ -176,9 +175,16 @@ function event() {
         // 下一页
         switch (pagination.index) {
           case 0:
-            document.getElementsByTagName('main')[0].style = "overflow: hidden;height: 100vh;"
-            document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
-            document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift')
+            document.getElementsByTagName('main')[0].scrollTo({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            })
+            setTimeout(() => {
+              document.getElementsByTagName('main')[0].style = "overflow: hidden;"
+              document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
+              document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift')
+            }, boxSecond)
             break
           case 1:
             // 右移
@@ -221,8 +227,13 @@ function event() {
             document.getElementsByClassName('gift')[0].classList.add('small-gift')
             setTimeout(() => {
               document.getElementsByClassName('gift')[0].classList.add('close-gift')
+              document.getElementsByTagName('main')[0].scrollTo({
+                top: scrollHeight - clientHeight,
+                left: 0,
+                behavior: 'smooth'
+              })
               setTimeout(() => {
-                document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;height: auto;'
+                document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;'
               }, 1000 - boxSecond)
             }, boxSecond)
             break
@@ -248,7 +259,7 @@ function event() {
             document.getElementsByClassName('gift-box')[0].classList.remove('gift-box-translate')
             document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
             document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift', 'gift-right', 'gift-left-bottom', 'gift-left-top', 'gift-right-top', 'gift-top')
-            document.getElementsByTagName('main')[0].style = "overflow: hidden;height: 100vh;"
+            document.getElementsByTagName('main')[0].style = "overflow: hidden;"
             break
         }
       }
@@ -264,7 +275,7 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
-      alert(scrollTop +','+ clientHeight +','+ threshold +','+ scrollHeight);
+      console.log(scrollTop, clientHeight, threshold, scrollHeight);
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
