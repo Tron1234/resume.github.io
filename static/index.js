@@ -38,8 +38,7 @@ function typing() {
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
     document.getElementsByTagName('main')[0].style = 'overflow: hidden auto;'
-    const dom = document.documentElement || document.body || window
-    dom.scrollTo({
+    document.getElementsByTagName('main')[0].scrollTo({
       top: document.getElementById('title').offsetTop - 40,
       left: 0,
       behavior: "smooth"
@@ -275,7 +274,7 @@ function event() {
     if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
-      console.log(scrollTop, clientHeight, threshold, scrollHeight);
+      alert(scrollTop+','+clientHeight+','+threshold+','+scrollHeight);
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
