@@ -136,7 +136,7 @@ function event() {
     }, 250)
   }
 
-  let startClientY, threshold = 80 // 触摸时的位置，手指触摸的阈值
+  let startClientY, threshold = 100 // 触摸时的位置，手指触摸的阈值
 
   function touchstart(e) {
     startClientY = e.changedTouches[0].clientY
