@@ -53,7 +53,7 @@ function typing() {
       while (textIndex < text.length) {
         const str = text[textIndex] // 当前文字
         if (/[a-zA-Z0-9]/.test(str)) {
-          length += (fontSize / 1.9)
+          length += (fontSize / 1.6)
         } else {
           length += fontSize
         }
@@ -108,7 +108,7 @@ function event() {
   const rate = Math.max(document.documentElement.clientHeight, document.documentElement.clientWidth) / distance
   document.querySelector(":root").style.setProperty('--centerDistance', document.documentElement.clientHeight / 2 - (dom.parentElement.parentElement.offsetTop + dom.parentElement.offsetTop + dom.clientHeight / 2
   ) + 'px')
-  document.querySelector(":root").style.setProperty('--largeRate', rate)
+  document.querySelector(":root").style.setProperty('--largeRate', rate - 20)
 
   // 可视区高度
   const clientHeight =
