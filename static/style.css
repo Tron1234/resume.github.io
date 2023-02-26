@@ -256,7 +256,7 @@
     .gift>ul>li:nth-of-type(2)>.ribbon {
       margin-top: calc(0.5 * var(--giftbox));
       transform-origin: top;
-      transform: rotateX(-90deg);
+      transform: translateZ(-0.3px) rotateX(-90deg);
     }
 
     .gift>ul>li:nth-of-type(2)>.ribbon>div {
@@ -367,12 +367,12 @@
     }
 
     .gift-box-translate {
-      transform: translateY(-40vh);
+      transform: translateY(-20vh);
     }
     
     @media screen and (max-width: 560px) {
       .gift-box-translate {
-        transform: translateY(-60vh);
+        transform: translateY(-50vh);
       }
     }
 
