@@ -108,7 +108,7 @@ function event() {
   const rate = Math.max(document.documentElement.clientHeight, document.documentElement.clientWidth) / distance
   document.querySelector(":root").style.setProperty('--centerDistance', document.documentElement.clientHeight / 2 - (dom.parentElement.parentElement.offsetTop + dom.parentElement.offsetTop + dom.clientHeight / 2
   ) + 'px')
-  document.querySelector(":root").style.setProperty('--largeRate', rate - 20)
+  document.querySelector(":root").style.setProperty('--largeRate', rate)
 
   // 可视区高度
   const clientHeight =
