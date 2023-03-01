@@ -1,4 +1,5 @@
-import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration } from '../lang/ZH_CN.js'
+import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration, chapters } from '../lang/ZH_CN.js'
+import { scrollTo } from './utils.js'
 // 上一个动画完成的时间,第一页动画是否结束
 let lastTime = 0, isFirstEnd = false
 // 获取csss设置的变量值
@@ -10,6 +11,8 @@ function initAni() {
   box()
   // 处理事件
   event()
+  // 动态添加文本
+  giftContent()
 }
 
 // 打字机效果
@@ -70,7 +73,7 @@ function typing() {
       }
       const str = text.slice(lastIndex)
       const time = str.length * wordTime
-      root.style.setProperty('--lastRowWidth' + (i === 1 ? 1 : 3), str.length + 2 + 'em')
+      root.style.setProperty('--lastRowWidth' + (i === 1 ? 1 : 3), str.length + (i === 1 ? 2 : 4) + 'em')
       dom.appendChild(createDom('div', str, time, lastTime, true))
       lastTime += time
     }
@@ -174,11 +177,13 @@ function event() {
               document.getElementsByTagName('main')[0].style = "overflow: hidden;"
               document.getElementsByClassName('gift')[0].classList.remove('close-gift', 'small-gift')
               document.getElementsByClassName('gift')[0].classList.add('open-gift', 'large-gift')
+              document.getElementsByClassName('left-avatar')[0].classList.add('left-avatar-ani')
             }, boxSecond)
             break
           case 1:
             // 右移
             document.getElementsByClassName('gift')[0].classList.add('gift-right')
+            document.getElementsByClassName('left-avatar')[0].classList.remove('left-avatar-ani')
             break
           case 2:
             // 左下
@@ -214,6 +219,7 @@ function event() {
           case 1:
             // 需要保留open-gift动画
             document.getElementsByClassName('gift')[0].classList.remove('large-gift')
+            document.getElementsByClassName('left-avatar')[0].classList.remove('left-avatar-ani')
             document.getElementsByClassName('gift')[0].classList.add('small-gift')
             setTimeout(() => {
               document.getElementsByClassName('gift')[0].classList.add('close-gift')
@@ -225,6 +231,7 @@ function event() {
             break
           case 2:
             document.getElementsByClassName('gift')[0].classList.remove('gift-right')
+            document.getElementsByClassName('left-avatar')[0].classList.add('left-avatar-ani')
             break
           case 3:
             document.getElementsByClassName('gift')[0].classList.remove('gift-left-bottom')
@@ -259,41 +266,88 @@ function event() {
 
   function turnPage(scrollTop) {
     if (!pagination.index && !isFirstEnd) return
+    const innerFirst = document.getElementsByClassName('inner-first')[0]
     if (down) {
       // 没有触底不做向下翻页操作
-      console.log(scrollTop + ',' + clientHeight + ',' + threshold + ',' + scrollHeight);
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
+      switch (pagination.index) {
+        case 1:
+          if(innerFirst.scrollTop + innerFirst.clientHeight + threshold < innerFirst.scrollHeight) return
+          break
+        case 2:
+          break
+        case 3:
+          break
+        case 4:
+          break
+        case 5:
+          break
+        case 6:
+          break
+      }
       pagination.index++
     } else {
       // 没有到顶不做向上翻页操作
       if (pagination.index === 7 && scrollTop > threshold) return
       if (pagination.index <= 0) return
       console.log('向上翻页++++++++++')
+      // 上一页
+      switch (pagination.index) {
+        case 1:
+          if(innerFirst.scrollTop > threshold) return
+          break
+        case 2:
+          break
+        case 3:
+          break
+        case 4:
+          break
+        case 5:
+          break
+        case 6:
+          break
+        case 7:
+          break
+      }
       pagination.index--
     }
   }
 }
 
-// c = element to scroll to or top position in pixels
-// e = duration of the scroll in ms, time scrolling
-// d = (optative) ease function. Default easeOutCuaic
-function scrollTo(c, e, d) {
-  d || (d = easeOutCuaic);
-  var a = document.getElementsByTagName('main')[0];
-  if (0 === a.scrollTop) {
-    var b = a.scrollTop;
-    ++a.scrollTop; a = b + 1 === a.scrollTop-- ? a : document.body
-  }
-  b = a.scrollTop; 0 >= e || ("object" === typeof b && (b = b.offsetTop),
-    "object" === typeof c && (c = c.offsetTop), function (a, b, c, f, d, e, h) {
-      function g() {
-        0 > f || 1 < f || 0 >= d ? a.scrollTop = c : (a.scrollTop = b - (b - c) * h(f),
-          f += d * e, setTimeout(g, e))
-      } g()
-    }(a, b, c, 0, 1 / e, 20, d))
-};
-function easeOutCuaic(t) { t--; return t * t * t + 1; }
+function giftContent() {
+  const waveCanvas = document.createElement('canvas')
+  waveCanvas.setAttribute('id', 'waveCanvas')
+  document.getElementsByClassName('inner-box')[0].appendChild(waveCanvas)
+  document.getElementsByClassName('inner-first_title')[0].innerText = chapters[0].title
+  document.getElementsByClassName('inner-first_right')[0].innerHTML += chapters[0].selfInfo.reduce((total, item, index) => {
+    let str = ''
+    switch (index) {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+        str = `<div>${item.value}</div>`
+        break
+      case 4:
+        str = `<a href="tel:${item.value}#mp.weixin.qq.com" class="target-event">${item.value}</a>`
+        break
+      case 5:
+        str = `<a href="mailto:${item.value}" class="target-event">${item.value}</a>`
+        break
+      case 6:
+        str = `<a href="${item.value}" class="target-event" target="_blank">${item.value}</a>`
+        break
+      case 7:
+        str = `<a href="${item.value}" class="target-event" target="_blank">${item.value}</a>`
+        break
+    }
+    return total += `<div class="flex-row-between items-start">
+      <div class="white-nowrap" style="margin-right:4em">${item.title}:</div>
+      ${str}
+    </div>`
+  }, '')
+}
 
 window.onload = initAni()
