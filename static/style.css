@@ -592,7 +592,7 @@ main {
 }
 
 .inner-first_left {
-  perspective: 10em;
+  perspective: 14em;
 }
 
 .inner-first_left>.left-avatar>.avatar-box:hover::after {

@@ -274,7 +274,7 @@ function event() {
       console.log('向下翻页---------')
       switch (pagination.index) {
         case 1:
-          if(innerFirst.scrollTop + innerFirst.clientHeight + threshold < innerFirst.scrollHeight) return
+          if (innerFirst.scrollTop + innerFirst.clientHeight + threshold < innerFirst.scrollHeight) return
           break
         case 2:
           break
@@ -296,7 +296,7 @@ function event() {
       // 上一页
       switch (pagination.index) {
         case 1:
-          if(innerFirst.scrollTop > threshold) return
+          if (innerFirst.scrollTop > threshold) return
           break
         case 2:
           break
@@ -317,6 +317,16 @@ function event() {
 }
 
 function giftContent() {
+  if (document.documentElement.clientWidth > 560) {
+    const script = document.createElement('script');
+    script.src = 'static/canvas/nest.js'
+    script.setAttribute('type', 'text/javascript')
+    script.setAttribute('color', '65,122,169')
+    script.setAttribute('opacity', '0.8')
+    script.setAttribute('zIndex', '-2')
+    script.setAttribute('count', '80')
+    document.body.append(script)
+  }
   const waveCanvas = document.createElement('canvas')
   waveCanvas.setAttribute('id', 'waveCanvas')
   document.getElementsByClassName('inner-box')[0].appendChild(waveCanvas)
