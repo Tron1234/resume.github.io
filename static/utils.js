@@ -77,8 +77,32 @@ function scrollTo(c, e, d) {
 };
 function easeOutCuaic(t) { t--; return t * t * t + 1; }
 
+
+/**
+ * @description: 创建元素
+ * @param {*} element string
+ * @param {*} obj 可能是对象也有可能是字符串，字符串默认是class
+ * @param {*} content string
+ * @return {*}
+ */
+function createElement(element, obj, content) {
+  if (!element) return
+  const dom = document.createElement(element)
+  if (!obj) return dom
+  if (typeof obj === 'string') {
+    dom.setAttribute('class', obj)
+  } else {
+    Object.keys(obj).forEach(item => {
+      dom.setAttribute(item, obj[item])
+    })
+  }
+  if (content) dom.innerText = content
+  return dom
+}
+
 export {
   debounce,
   throttle,
-  scrollTo
+  scrollTo,
+  createElement
 }

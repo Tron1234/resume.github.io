@@ -1,5 +1,5 @@
 import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration, chapters } from '../lang/ZH_CN.js'
-import { scrollTo } from './utils.js'
+import { scrollTo, createElement } from './utils.js'
 // 上一个动画完成的时间,第一页动画是否结束
 let lastTime = 0, isFirstEnd = false
 // 获取csss设置的变量值
@@ -56,7 +56,7 @@ function typing() {
       while (textIndex < text.length) {
         const str = text[textIndex] // 当前文字
         if (/[a-zA-Z0-9]/.test(str)) {
-          length += (fontSize / 1.6)
+          length += (fontSize / 1.5)
         } else {
           length += fontSize
         }
@@ -73,16 +73,15 @@ function typing() {
       }
       const str = text.slice(lastIndex)
       const time = str.length * wordTime
-      root.style.setProperty('--lastRowWidth' + (i === 1 ? 1 : 3), str.length + (i === 1 ? 2 : 4) + 'em')
+      root.style.setProperty('--lastRowWidth' + (i === 1 ? 1 : 3), str.length + (i === 1 ? 2 : 5) + 'em')
       dom.appendChild(createDom('div', str, time, lastTime, true))
       lastTime += time
     }
 
     function createDom(tag, content, time, lastTime, last = false) {
-      const dom = document.createElement(tag)
-      dom.innerText = content
-      dom.style = `animation: ${last ? ('typing_last_' + (i === 1 ? 1 : 3)) : 'typing'} ${time}s steps(${content.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
-      return dom
+      return createElement(tag, {
+        style: `animation: ${last ? ('typing_last_' + (i === 1 ? 1 : 3)) : 'typing'} ${time}s steps(${content.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
+      }, content)
     }
   }
 }
@@ -123,6 +122,7 @@ function event() {
   let lastFlag = false // 上一次滚动时间
   let timer = null
   function wheel(e) {
+    console.log(lastFlag);
     if (!lastFlag) {
       lastFlag = true
       // 距顶部
@@ -135,7 +135,7 @@ function event() {
     clearTimeout(timer)
     timer = setTimeout(() => {
       lastFlag = false
-    }, 250)
+    }, 500)
   }
 
   let startClientY, threshold = 20 // 触摸时的位置，手指触摸的阈值
@@ -223,7 +223,6 @@ function event() {
             document.getElementsByClassName('gift')[0].classList.add('small-gift')
             setTimeout(() => {
               document.getElementsByClassName('gift')[0].classList.add('close-gift')
-              scrollTo(scrollHeight - clientHeight, boxSecond)
               setTimeout(() => {
                 document.getElementsByTagName('main')[0].style = `overflow: hidden auto;`
               }, 1000 - boxSecond)
@@ -265,8 +264,11 @@ function event() {
   })
 
   function turnPage(scrollTop) {
-    if (!pagination.index && !isFirstEnd) return
+    // if (!pagination.index && !isFirstEnd) return
     const innerFirst = document.getElementsByClassName('inner-first')[0]
+    const innerThird = document.getElementsByClassName('inner-third')[0]
+    const innerSecond = document.getElementsByClassName('inner-second')[0]
+    
     if (down) {
       // 没有触底不做向下翻页操作
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
@@ -277,8 +279,10 @@ function event() {
           if (innerFirst.scrollTop + innerFirst.clientHeight + threshold < innerFirst.scrollHeight) return
           break
         case 2:
+          if (innerThird.scrollTop + innerThird.clientHeight + threshold < innerThird.scrollHeight) return
           break
         case 3:
+          if (innerSecond.scrollTop + innerSecond.clientHeight + threshold < innerSecond.scrollHeight) return
           break
         case 4:
           break
@@ -299,8 +303,10 @@ function event() {
           if (innerFirst.scrollTop > threshold) return
           break
         case 2:
+          if (innerThird.scrollTop > threshold) return
           break
         case 3:
+          if (innerSecond.scrollTop > threshold) return
           break
         case 4:
           break
@@ -314,21 +320,33 @@ function event() {
       pagination.index--
     }
   }
+  const audio = new Audio()
+  const audioUrls = ['do', 're', 'mi', 'fa', 'sol', 'la', 'si', 'do']
+  document.querySelectorAll('.inner-third_content>.icon-box>.icon-style').forEach((el, index) => {
+    el.addEventListener('click', e => {
+      audio.pause()
+      audio.src = `./static/syllable/${audioUrls[index]}.mp3`
+      audio.play()
+    })
+  })
 }
 
 function giftContent() {
   if (document.documentElement.clientWidth > 560) {
-    const script = document.createElement('script');
-    script.src = 'static/canvas/nest.js'
-    script.setAttribute('type', 'text/javascript')
-    script.setAttribute('color', '65,122,169')
-    script.setAttribute('opacity', '0.8')
-    script.setAttribute('zIndex', '-2')
-    script.setAttribute('count', '80')
+    const script = createElement('script', {
+      src: 'static/canvas/nest.js',
+      type: 'text/javascript',
+      color: '65,122,169',
+      opacity: '0.8',
+      zIndex: '-2',
+      count: '80'
+    })
     document.body.append(script)
   }
-  const waveCanvas = document.createElement('canvas')
-  waveCanvas.setAttribute('id', 'waveCanvas')
+  // 第一页
+  const waveCanvas = createElement('canvas', {
+    id: 'waveCanvas'
+  })
   document.getElementsByClassName('inner-box')[0].appendChild(waveCanvas)
   document.getElementsByClassName('inner-first_title')[0].innerText = chapters[0].title
   document.getElementsByClassName('inner-first_right')[0].innerHTML += chapters[0].selfInfo.reduce((total, item, index) => {
@@ -358,6 +376,59 @@ function giftContent() {
       ${str}
     </div>`
   }, '')
+
+  // 第二页
+  document.querySelectorAll('.inner-third_content>.icon-box>.icon-name').forEach((el, index) => {
+    el.innerText = chapters[2].skills[index]
+  })
+  document.querySelector('.inner-third>.inner-third_right>.inner-third_right-title').innerText = chapters[2].commonSkills
+  const thirdLeftTitle = createElement('div', {
+    class: 'inner-third_left-title inner-title'
+  }, chapters[2].skillsIntro)
+  document.querySelector('.inner-third>.inner-third_left').append(thirdLeftTitle)
+  const thirdLeftContent = createElement('div', {
+    class: 'inner-third_left-content'
+  })
+  chapters[2].skillsArticle.forEach((item, index) => {
+    const dom = createElement('div', {
+      class: 'inner-third_left-item'
+    }, item)
+    thirdLeftContent.append(dom)
+  })
+  document.querySelector('.inner-third>.inner-third_left').append(thirdLeftContent)
+
+
+  // 第三页
+  document.querySelector('.inner-second>.inner-second_title').innerText = chapters[1].title
+  chapters[1].list.forEach(item => {
+    const dom = createElement('div', {
+      class: 'inner-second_item'
+    })
+    const time = createElement('div', {
+      class: 'inner-second_item-time'
+    }, item.time)
+    dom.append(time)
+    const content = createElement('div', {
+      class: 'inner-second_item-content'
+    })
+    const jobName = createElement('div', {
+      class: 'inner-second_item-time'
+    }, item.jobName)
+    content.append(jobName)
+    const company = createElement('div', {
+      class: 'inner-second_item-company'
+    }, item.company)
+    content.append(company)
+    item.jobContent.forEach((child, index) => {
+      content.append(createElement('div', {
+        class: 'inner-second_item-detail',
+        'data-index': index + 1+'.'
+      }, child))
+    })
+    dom.append(time)
+    dom.append(content)
+    document.querySelector('.inner-second>.inner-second_content').append(dom)
+  })
 }
 
 window.onload = initAni()
