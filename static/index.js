@@ -427,6 +427,31 @@ function giftContent() {
     parent.append(childLeft, childRight)
     document.querySelector('.inner-fourth>.inner-fourth_content').append(parent)
   })
+
+  // 第五页
+  document.querySelector('.inner-fifth>.inner-fifth_title').innerText = chapters[4].title
+  chapters[4].list.forEach(item => {
+    const parent = createElement('div', { class: 'inner-fifth_item' })
+    const childRight = createElement('div', { class: 'inner-fifth_item-right' })
+    const childRightName = createElement('div', { class: 'item-right-name' }, item.name)
+    const childProject = createElement('div', { class: 'item-right-info' })
+    childProject.append(createElement('div', { class: 'item-right-title' }, chapters[4].projectDesc + ':'), createElement('div', { class: 'item-right-content' }, item.projectDesc))
+    const childResponsibility = createElement('div', { class: 'item-right-info' })
+    childResponsibility.append(createElement('div', { class: 'item-right-title' }, chapters[4].responsibilityDesc + ':'), createElement('div', { class: 'item-right-content' }, item.responsibilityDesc))
+    const childKeyPoints = createElement('div', { class: 'item-right-info' })
+    childKeyPoints.append(createElement('div', { class: 'item-right-title' }, chapters[4].keyPoints + ':'))
+    const childKeyPointsContent = createElement('div', { class: 'item-right-content' })
+    item.keyPoints.forEach((child, index) => {
+      childKeyPointsContent.append(createElement('div', {
+        'data-index': index + 1 + '.',
+        class: 'keypoint-item'
+      }, child))
+    })
+    childKeyPoints.append(childKeyPointsContent)
+    childRight.append(childRightName, childProject, childResponsibility, childKeyPoints)
+    parent.append(childRight)
+    document.querySelector('.inner-fifth>.inner-fifth_content').append(parent)
+  })
 }
 
 window.onload = initAni()
