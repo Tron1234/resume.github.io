@@ -2,6 +2,7 @@ import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration, 
 import { scrollTo, createElement } from './utils.js'
 // 上一个动画完成的时间,第一页动画是否结束
 let lastTime = 0, isFirstEnd = false
+const classList = ['first', 'third', 'second', 'fourth', 'fifth', 'sixth']
 // 获取csss设置的变量值
 const root = document.querySelector(":root")
 function initAni() {
@@ -265,31 +266,15 @@ function event() {
 
   function turnPage(scrollTop) {
     // if (!pagination.index && !isFirstEnd) return
-    const innerFirst = document.getElementsByClassName('inner-first')[0]
-    const innerThird = document.getElementsByClassName('inner-third')[0]
-    const innerSecond = document.getElementsByClassName('inner-second')[0]
-    
     if (down) {
       // 没有触底不做向下翻页操作
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
       if (pagination.index >= 7) return
       console.log('向下翻页---------')
-      switch (pagination.index) {
-        case 1:
-          if (innerFirst.scrollTop + innerFirst.clientHeight + threshold < innerFirst.scrollHeight) return
-          break
-        case 2:
-          if (innerThird.scrollTop + innerThird.clientHeight + threshold < innerThird.scrollHeight) return
-          break
-        case 3:
-          if (innerSecond.scrollTop + innerSecond.clientHeight + threshold < innerSecond.scrollHeight) return
-          break
-        case 4:
-          break
-        case 5:
-          break
-        case 6:
-          break
+      // 下一页
+      if (pagination.index > 0 && pagination.index < 7) {
+        const dom = document.getElementsByClassName(`inner-${classList[pagination.index - 1]}`)[0]
+        if (dom.scrollTop + dom.clientHeight + threshold < dom.scrollHeight) return
       }
       pagination.index++
     } else {
@@ -298,24 +283,9 @@ function event() {
       if (pagination.index <= 0) return
       console.log('向上翻页++++++++++')
       // 上一页
-      switch (pagination.index) {
-        case 1:
-          if (innerFirst.scrollTop > threshold) return
-          break
-        case 2:
-          if (innerThird.scrollTop > threshold) return
-          break
-        case 3:
-          if (innerSecond.scrollTop > threshold) return
-          break
-        case 4:
-          break
-        case 5:
-          break
-        case 6:
-          break
-        case 7:
-          break
+      if (pagination.index > 0 && pagination.index < 7) {
+        const dom = document.getElementsByClassName(`inner-${classList[pagination.index-1]}`)[0]
+        if (dom.scrollTop > threshold) return
       }
       pagination.index--
     }
@@ -422,12 +392,40 @@ function giftContent() {
     item.jobContent.forEach((child, index) => {
       content.append(createElement('div', {
         class: 'inner-second_item-detail',
-        'data-index': index + 1+'.'
+        'data-index': index + 1 + '.'
       }, child))
     })
     dom.append(time)
     dom.append(content)
     document.querySelector('.inner-second>.inner-second_content').append(dom)
+  })
+
+  // 第四页
+  document.querySelector('.inner-fourth>.inner-fourth_title').innerText = chapters[3].title
+  chapters[3].list.forEach(item => {
+    const parent = createElement('div', { class: 'inner-fourth_item' })
+    const childLeft = createElement('img', { class: 'inner-fourth_item-left', src: item.icon })
+    const childRight = createElement('div', { class: 'inner-fourth_item-right' })
+    const childRightName = createElement('div', { class: 'item-right-name' }, item.name)
+    const childLeftMobile = createElement('img', { class: 'inner-fourth_item-left_mobile', src: item.icon })
+    childRightName.append(childLeftMobile)
+    const childProject = createElement('div', { class: 'item-right-info' })
+    childProject.append(createElement('div', { class: 'item-right-title' }, chapters[3].projectDesc + ':'), createElement('div', { class: 'item-right-content' }, item.projectDesc))
+    const childResponsibility = createElement('div', { class: 'item-right-info' })
+    childResponsibility.append(createElement('div', { class: 'item-right-title' }, chapters[3].responsibilityDesc + ':'), createElement('div', { class: 'item-right-content' }, item.responsibilityDesc))
+    const childKeyPoints = createElement('div', { class: 'item-right-info' })
+    childKeyPoints.append(createElement('div', { class: 'item-right-title' }, chapters[3].keyPoints + ':'))
+    const childKeyPointsContent = createElement('div', { class: 'item-right-content' })
+    item.keyPoints.forEach((child, index) => {
+      childKeyPointsContent.append(createElement('div', {
+        'data-index': index + 1 + '.',
+        class: 'keypoint-item'
+      }, child))
+    })
+    childKeyPoints.append(childKeyPointsContent)
+    childRight.append(childRightName, childProject, childResponsibility, childKeyPoints)
+    parent.append(childLeft, childRight)
+    document.querySelector('.inner-fourth>.inner-fourth_content').append(parent)
   })
 }
 
