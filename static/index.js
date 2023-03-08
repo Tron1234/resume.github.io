@@ -265,7 +265,7 @@ function event() {
   })
 
   function turnPage(scrollTop) {
-    // if (!pagination.index && !isFirstEnd) return
+    if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
@@ -284,7 +284,7 @@ function event() {
       console.log('向上翻页++++++++++')
       // 上一页
       if (pagination.index > 0 && pagination.index < 7) {
-        const dom = document.getElementsByClassName(`inner-${classList[pagination.index-1]}`)[0]
+        const dom = document.getElementsByClassName(`inner-${classList[pagination.index - 1]}`)[0]
         if (dom.scrollTop > threshold) return
       }
       pagination.index--
@@ -345,7 +345,7 @@ function giftContent() {
       <div class="white-nowrap" style="margin-right:4em">${item.title}:</div>
       ${str}
     </div>`
-  }, '')
+  }, '') + `<div class="inner-first_title summarize-title">${chapters[0].summarize_title}</div><div class="inner-first_summarize">${chapters[0].summarize}</div>`
 
   // 第二页
   document.querySelectorAll('.inner-third_content>.icon-box>.icon-name').forEach((el, index) => {
@@ -452,6 +452,15 @@ function giftContent() {
     parent.append(childRight)
     document.querySelector('.inner-fifth>.inner-fifth_content').append(parent)
   })
+
+  // 第六页
+  const sixthDom = document.querySelector('.inner-sixth>.inner-sixth_content')
+  sixthDom.append(createElement('div', { class: 'inner-sixth_content-name' }, chapters[5].name), createElement('div', { class: 'inner-sixth_content-introduction' }, chapters[5].introduction), createElement('div', { class: 'inner-sixth_content-college' }, chapters[5].college), createElement('div', { class: 'inner-sixth_content-major' }, chapters[5].major))
+  const honourDom = createElement('div', { class: 'inner-sixth_content-honour' })
+  chapters[5].list.forEach(item => {
+    honourDom.append(createElement('div', { class: 'honour-item' }, item))
+  })
+  sixthDom.append(honourDom, createElement('div', { class: 'inner-sixth_content-time' }, chapters[5].time))
 }
 
 window.onload = initAni()
