@@ -1,10 +1,18 @@
-import { selfAssessment_title, introduce, selfAssessment, sendGift, peroration, chapters } from '../lang/ZH_CN.js'
+import * as zh from '../lang/ZH_CN.js'
+import * as en from '../lang/EN_US.js'
 import { scrollTo, createElement } from './utils.js'
 // 上一个动画完成的时间,第一页动画是否结束
 let lastTime = 0, isFirstEnd = false
 const classList = ['first', 'third', 'second', 'fourth', 'fifth', 'sixth']
 // 获取csss设置的变量值
 const root = document.querySelector(":root")
+
+// 国际化
+const language = localStorage.getItem('language')
+const languageStatus = !language || language === 'zh'
+const { selfAssessment_title, introduce, selfAssessment, sendGift, peroration, chapters } = (languageStatus ? zh : en)
+document.getElementById('toggle').checked = !languageStatus
+
 function initAni() {
   // 打字机
   typing()
@@ -23,7 +31,7 @@ function typing() {
   const selfAssessment_dom = document.getElementById('selfAssessment')
   title_dom.innerText = selfAssessment_title
   // 每个词需要的时间，单位秒
-  const wordTime = 0.12
+  const wordTime = languageStatus ? 0.12 : 0.06
   //文本宽度
   const fontSize = Number(getComputedStyle(root).getPropertyValue("--fontSize").replace('px', '')) + 2
   // web端百分比
@@ -41,6 +49,7 @@ function typing() {
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
     document.getElementsByTagName('main')[0].style = `overflow: hidden auto;`
+    root.style.setProperty('--contact-opacity', 0)
     scrollTo(document.getElementById('title').offsetTop - 40, 350)
   }, lastTime * 1000)
   lastTime += time
@@ -57,7 +66,7 @@ function typing() {
       while (textIndex < text.length) {
         const str = text[textIndex] // 当前文字
         if (/[a-zA-Z0-9]/.test(str)) {
-          length += (fontSize / 1.5)
+          length += (fontSize / (languageStatus ? 1.5 : 2.2))
         } else {
           length += fontSize
         }
@@ -106,13 +115,13 @@ function event() {
   window.onmousewheel = document.onmousewheel = wheel
   window.ontouchstart = document.ontouchstart = touchstart
   window.ontouchend = document.ontouchend = touchend
+  window.ontouchmove = document.ontouchmove = touchmove
 
   const distance = Number(getComputedStyle(root).getPropertyValue("--giftbox").replace('px', ''))
   const rate = Math.max(document.documentElement.clientHeight, document.documentElement.clientWidth) / distance
-  document.querySelector(":root").style.setProperty('--centerDistance', document.documentElement.clientHeight / 2 - (dom.parentElement.parentElement.offsetTop + dom.parentElement.offsetTop + dom.clientHeight / 2
+  root.style.setProperty('--centerDistance', document.documentElement.clientHeight / 2 - (dom.parentElement.parentElement.offsetTop + dom.parentElement.offsetTop + dom.clientHeight / 2
   ) + 'px')
-  document.querySelector(":root").style.setProperty('--largeRate', rate)
-
+  root.style.setProperty('--largeRate', rate)
   // 可视区高度
   const clientHeight =
     document.getElementsByTagName('main')[0].clientHeight
@@ -123,12 +132,15 @@ function event() {
   let lastFlag = false // 上一次滚动时间
   let timer = null
   function wheel(e) {
-    console.log(lastFlag);
+    const scrollTop =
+      document.getElementsByTagName('main')[0].scrollTop
+
+    const opacity = 1 - scrollTop / 30
+    root.style.setProperty('--contact-opacity', opacity > 1 ? 1 : opacity < 0 ? 0 : opacity)
+
     if (!lastFlag) {
       lastFlag = true
       // 距顶部
-      const scrollTop =
-        document.getElementsByTagName('main')[0].scrollTop
       down = e.wheelDelta ? e.wheelDelta < 0 : e.detail > 0;
       turnPage(scrollTop)
       return
@@ -143,6 +155,13 @@ function event() {
 
   function touchstart(e) {
     startClientY = e.changedTouches[0].clientY
+  }
+
+  function touchmove(e) {
+    const scrollTop =
+      document.getElementsByTagName('main')[0].scrollTop
+    const opacity = 1 - scrollTop / 20
+    root.style.setProperty('--contact-opacity', opacity > 1 ? 1 : opacity < 0 ? 0 : opacity)
   }
 
   function touchend(e) {
@@ -173,6 +192,7 @@ function event() {
         // 下一页
         switch (pagination.index) {
           case 0:
+            root.style.setProperty('--contact-opacity', 1)
             scrollTo(0, boxSecond)
             setTimeout(() => {
               document.getElementsByTagName('main')[0].style = "overflow: hidden;"
@@ -274,6 +294,7 @@ function event() {
       // 下一页
       if (pagination.index > 0 && pagination.index < 7) {
         const dom = document.getElementsByClassName(`inner-${classList[pagination.index - 1]}`)[0]
+        console.log(dom.scrollTop, dom.clientHeight, threshold, dom.scrollHeight);
         if (dom.scrollTop + dom.clientHeight + threshold < dom.scrollHeight) return
       }
       pagination.index++
@@ -297,6 +318,22 @@ function event() {
       audio.pause()
       audio.src = `./static/syllable/${audioUrls[index]}.mp3`
       audio.play()
+    })
+  })
+  document.getElementById('toggle').addEventListener('change', e => {
+    if (e.target.checked) {
+      localStorage.setItem('language', 'EN')
+    } else {
+      localStorage.removeItem('language')
+    }
+    setTimeout(() => {
+      location.reload()
+    }, 500)
+  })
+
+  document.querySelectorAll('.contact-menu svg').forEach(el => {
+    el.addEventListener('click', e => {
+      window.open(e.target.dataset.target)
     })
   })
 }
@@ -359,7 +396,7 @@ function giftContent() {
   const thirdLeftContent = createElement('div', {
     class: 'inner-third_left-content'
   })
-  chapters[2].skillsArticle.forEach((item, index) => {
+  chapters[2].skillsArticle.forEach(item => {
     const dom = createElement('div', {
       class: 'inner-third_left-item'
     }, item)
