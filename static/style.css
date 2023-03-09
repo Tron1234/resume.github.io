@@ -1694,7 +1694,7 @@ main {
   position: absolute;
   top: var(--button-toggle-offset);
   left: calc(var(--button-toggle-offset) + ((var(--toggle-diameter) - 0.6rem) / 2));
-  font-size: var(--fontSize);
+  font-size: 0.6rem;
   height: var(--toggle-diameter);
   line-height: var(--toggle-diameter);
 }
@@ -1703,7 +1703,7 @@ main {
   position: absolute;
   top: var(--button-toggle-offset);
   right: calc(var(--button-toggle-offset) + ((var(--toggle-diameter) - 0.6rem) / 2));
-  font-size: var(--fontSize);
+  font-size: 0.6rem;
   height: var(--toggle-diameter);
   line-height: var(--toggle-diameter);
 }
@@ -1715,7 +1715,7 @@ main {
   width: var(--toggle-diameter);
   height: var(--toggle-diameter);
   line-height: var(--toggle-diameter);
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   text-align: center;
   background-color: #fff;
   border-radius: calc(var(--toggle-diameter)/2);
