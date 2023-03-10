@@ -224,7 +224,14 @@ main {
   transform: rotateX(90deg);
 }
 
+.gift-title-content>#giftTitle {
+  white-space: nowrap;
+  padding: 0 2rem;
+}
+
 .gift-title-content>#peroration {
+  white-space: nowrap;
+  padding: 0 2rem;
   transform-origin: top;
   transform: rotateX(-90deg);
 }

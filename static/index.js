@@ -31,7 +31,7 @@ function typing() {
   const selfAssessment_dom = document.getElementById('selfAssessment')
   title_dom.innerText = selfAssessment_title
   // 每个词需要的时间，单位秒
-  const wordTime = languageStatus ? 0.12 : 0.06
+  const wordTime = languageStatus ? 0.07 : 0.05
   //文本宽度
   const fontSize = Number(getComputedStyle(root).getPropertyValue("--fontSize").replace('px', '')) + 2
   // web端百分比
@@ -44,7 +44,7 @@ function typing() {
   const hanlderChild = hanlderRow(fontSize, maxWidth)
   hanlderChild(introduce_dom, introduce)
   // 处理自我总结
-  root.style.setProperty('--lastRowWidth2', selfAssessment_title.length + 1 + 'em')
+  root.style.setProperty('--lastRowWidth2', selfAssessment_title.length + 2 + 'em')
   const time = selfAssessment_title.length * wordTime
   title_dom.style = `animation: typing_last_2 ${time}s steps(${selfAssessment_title.length}, end) ${lastTime}s forwards, blink 0.6s step-end ${lastTime}s infinite, blink-close 0s ease ${lastTime + time}s forwards;`
   setTimeout(() => {
