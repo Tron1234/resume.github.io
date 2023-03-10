@@ -286,7 +286,7 @@ function event() {
   })
 
   function turnPage(scrollTop) {
-    // if (!pagination.index && !isFirstEnd) return
+    if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
