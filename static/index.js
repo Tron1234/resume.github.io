@@ -66,7 +66,7 @@ function typing() {
       while (textIndex < text.length) {
         const str = text[textIndex] // 当前文字
         if (/[a-zA-Z0-9]/.test(str)) {
-          length += (fontSize / (languageStatus ? 1.5 : 2.2))
+          length += (fontSize / (languageStatus ? 1.5 : 2.4))
         } else {
           length += fontSize
         }
@@ -286,7 +286,7 @@ function event() {
   })
 
   function turnPage(scrollTop) {
-    if (!pagination.index && !isFirstEnd) return
+    // if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return

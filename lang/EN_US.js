@@ -1,7 +1,7 @@
 export const selfAssessment_title = "Self-Assessment"
 export const introduce = "My name is Wang Zhuohua, 25 years old, currently working as a frontend development engineer. I use technologies such as Vue, Uniapp framework, WeChat Mini Program, and mainly engage in the development of mobile H5, WeChat public account, and hybrid App clients. I am good at handling web adaptive problems, compatibility issues with iOS/Android browsers and Apps, as well as WeChat public account JSSDK invocation issues."
 export const selfAssessment = "I have been in this industry for 3 years, during which I have worked on independent development of multi-end projects and mostly service-side projects. I have gained some technical experience and also discovered some of my own technical issues, and have been diving deep into the underlying principles. Many people may think that frontend development does not have technical difficulties, as most of the business code is on the backend. However, for me, someone who has learned backend programming in college but ended up in frontend development, the charm of frontend development lies in being able to see gorgeous styles and animation effects in real-time, which is what I look forward to, compared to the boring large amount of data."
-export const sendGift = "The gift, Please swipe up"
+export const sendGift = "The gift,Please swipe up"
 export const peroration = "Thank you for reading!"
 
 export const chapters = [{
@@ -85,7 +85,7 @@ export const chapters = [{
   "skills": [
     "Vue",
     "uni-app",
-    "WeChat Mini Program",
+    "MiniProgram",
     "tailwindCSS",
     "Nodejs",
     "JQuery",
