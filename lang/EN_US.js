@@ -1,8 +1,8 @@
 export const selfAssessment_title = "Self-Assessment"
 export const introduce = "My name is Wang Zhuohua, 25 years old, currently working as a frontend development engineer. I use technologies such as Vue, Uniapp framework, WeChat Mini Program, and mainly engage in the development of mobile H5, WeChat public account, and hybrid App clients. I am good at handling web adaptive problems, compatibility issues with iOS/Android browsers and Apps, as well as WeChat public account JSSDK invocation issues."
 export const selfAssessment = "I have been in this industry for 3 years, during which I have worked on independent development of multi-end projects and mostly service-side projects. I have gained some technical experience and also discovered some of my own technical issues, and have been diving deep into the underlying principles. Many people may think that frontend development does not have technical difficulties, as most of the business code is on the backend. However, for me, someone who has learned backend programming in college but ended up in frontend development, the charm of frontend development lies in being able to see gorgeous styles and animation effects in real-time, which is what I look forward to, compared to the boring large amount of data."
-export const sendGift = "I'm sending you a gift, please swipe down to open"
-export const peroration = "Thank you for reading, wish you happiness every day!"
+export const sendGift = "The gift, Please swipe up"
+export const peroration = "Thank you for reading!"
 
 export const chapters = [{
   "title": "Basic Information",
@@ -17,7 +17,7 @@ export const chapters = [{
     },
     {
       "title": "Date of Birth",
-      "value": "November 1997"
+      "value": "1997.11"
     },
     {
       "title": "Intended City",
@@ -47,7 +47,7 @@ export const chapters = [{
   "title": "Work Experience",
   "list": [
     {
-      "time": "October 2022 - February 2023",
+      "time": "2022.10 - 2023.02",
       "company": "Shenzhen Oriental Datang Information Technology Co., Ltd.",
       "jobName": "Web Front-end Engineer",
       "jobContent": [
@@ -57,7 +57,7 @@ export const chapters = [{
       ]
     },
     {
-      "time": "July 2021 - September 2022",
+      "time": "2021.07 - 2022.09",
       "company": "Shiyun Technology (Shenzhen) Co., Ltd.",
       "jobName": "Web Front-end Engineer",
       "jobContent": [
@@ -69,7 +69,7 @@ export const chapters = [{
       ]
     },
     {
-      "time": "March 2020 - June 2021",
+      "time": "2020.03 - 2021.06",
       "company": "Shenzhen Youqu Life Network Technology Co., Ltd.",
       "jobName": "Front-end Technical Development Engineer",
       "jobContent": [

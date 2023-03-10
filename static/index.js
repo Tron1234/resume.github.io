@@ -119,7 +119,7 @@ function event() {
 
   const distance = Number(getComputedStyle(root).getPropertyValue("--giftbox").replace('px', ''))
   const rate = Math.max(document.documentElement.clientHeight, document.documentElement.clientWidth) / distance
-  root.style.setProperty('--centerDistance', document.documentElement.clientHeight / 2 - (dom.parentElement.parentElement.offsetTop + dom.parentElement.offsetTop + dom.clientHeight / 2
+  root.style.setProperty('--centerDistance', document.documentElement.clientHeight / 2 - (dom.parentElement.parentElement.offsetTop + dom.clientHeight / 2
   ) + 'px')
   root.style.setProperty('--largeRate', rate)
   // 可视区高度
@@ -165,6 +165,7 @@ function event() {
   }
 
   function touchend(e) {
+    touchmove(e)
     if (!lastFlag) {
       lastFlag = true
       // 距顶部
@@ -285,7 +286,7 @@ function event() {
   })
 
   function turnPage(scrollTop) {
-    if (!pagination.index && !isFirstEnd) return
+    // if (!pagination.index && !isFirstEnd) return
     if (down) {
       // 没有触底不做向下翻页操作
       if (!pagination.index && scrollTop + clientHeight + threshold < scrollHeight) return
@@ -333,7 +334,7 @@ function event() {
 
   document.querySelectorAll('.contact-menu svg').forEach(el => {
     el.addEventListener('click', e => {
-      window.open(e.target.dataset.target)
+      window.open(e.currentTarget.dataset.target)
     })
   })
 }
