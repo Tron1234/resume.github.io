@@ -1765,7 +1765,7 @@ main {
   }
 }
 
-.fix {
+/* .fix {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -1775,4 +1775,4 @@ main {
   transform: translateX(-50%);
   background: black;
   z-index: 99;
-}
+} */
