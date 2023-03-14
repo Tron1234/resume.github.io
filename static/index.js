@@ -58,6 +58,7 @@ function typing() {
   function hanlderRow(fontSize, maxWidth) {
     let i = 0
     return (dom, text) => {
+      const fragment = document.createDocumentFragment();
       i++
       // 记录每一行文字数用于动画的时长计算
       let length = 0 // 一行文字长度
@@ -74,7 +75,7 @@ function typing() {
         if (length >= maxWidth) {
           const str = text.slice(lastIndex, textIndex)
           const time = str.length * wordTime
-          dom.appendChild(createDom('div', str, time, lastTime))
+          fragment.appendChild(createDom('div', str, time, lastTime))
           lastTime += time
           lastIndex = textIndex
           length = 0
@@ -84,8 +85,9 @@ function typing() {
       const str = text.slice(lastIndex)
       const time = str.length * wordTime
       root.style.setProperty('--lastRowWidth' + (i === 1 ? 1 : 3), str.length + (i === 1 ? 2 : 5) + 'em')
-      dom.appendChild(createDom('div', str, time, lastTime, true))
+      fragment.appendChild(createDom('div', str, time, lastTime, true))
       lastTime += time
+      dom.appendChild(fragment)
     }
 
     function createDom(tag, content, time, lastTime, last = false) {
@@ -386,119 +388,96 @@ function giftContent() {
   }, '') + `<div class="inner-first_title summarize-title">${chapters[0].summarize_title}</div><div class="inner-first_summarize">${chapters[0].summarize}</div>`
 
   // 第二页
+  const fragmentSecond = document.createDocumentFragment();
   document.querySelectorAll('.inner-third_content>.icon-box>.icon-name').forEach((el, index) => {
     el.innerText = chapters[2].skills[index]
   })
   document.querySelector('.inner-third>.inner-third_right>.inner-third_right-title').innerText = chapters[2].commonSkills
-  const thirdLeftTitle = createElement('div', {
+  fragmentSecond.append(createElement('div', {
     class: 'inner-third_left-title inner-title'
-  }, chapters[2].skillsIntro)
-  document.querySelector('.inner-third>.inner-third_left').append(thirdLeftTitle)
-  const thirdLeftContent = createElement('div', {
+  }, chapters[2].skillsIntro), createElement('div', {
     class: 'inner-third_left-content'
-  })
+  }))
   chapters[2].skillsArticle.forEach(item => {
-    const dom = createElement('div', {
+    fragmentSecond.childNodes[1].appendChild(createElement('div', {
       class: 'inner-third_left-item'
-    }, item)
-    thirdLeftContent.append(dom)
+    }, item))
   })
-  document.querySelector('.inner-third>.inner-third_left').append(thirdLeftContent)
-
+  document.querySelector('.inner-third>.inner-third_left').appendChild(fragmentSecond)
 
   // 第三页
   document.querySelector('.inner-second>.inner-second_title').innerText = chapters[1].title
-  chapters[1].list.forEach(item => {
-    const dom = createElement('div', {
+  const fragmentThird = document.createDocumentFragment();
+  chapters[1].list.forEach((item, index) => {
+    fragmentThird.appendChild(createElement('div', {
       class: 'inner-second_item'
-    })
-    const time = createElement('div', {
+    }))
+    fragmentThird.childNodes[index].append(createElement('div', {
       class: 'inner-second_item-time'
-    }, item.time)
-    dom.append(time)
-    const content = createElement('div', {
+    }, item.time), createElement('div', {
       class: 'inner-second_item-content'
-    })
-    const jobName = createElement('div', {
+    }))
+    fragmentThird.childNodes[index].childNodes[1].append(createElement('div', {
       class: 'inner-second_item-time'
-    }, item.jobName)
-    content.append(jobName)
-    const company = createElement('div', {
+    }, item.jobName), createElement('div', {
       class: 'inner-second_item-company'
-    }, item.company)
-    content.append(company)
-    item.jobContent.forEach((child, index) => {
-      content.append(createElement('div', {
+    }, item.company))
+    item.jobContent.forEach((child, i) => {
+      fragmentThird.childNodes[index].childNodes[1].appendChild(createElement('div', {
         class: 'inner-second_item-detail',
-        'data-index': index + 1 + '.'
+        'data-index': i + 1 + '.'
       }, child))
     })
-    dom.append(time)
-    dom.append(content)
-    document.querySelector('.inner-second>.inner-second_content').append(dom)
   })
+  document.querySelector('.inner-second>.inner-second_content').appendChild(fragmentThird)
 
   // 第四页
   document.querySelector('.inner-fourth>.inner-fourth_title').innerText = chapters[3].title
-  chapters[3].list.forEach(item => {
-    const parent = createElement('div', { class: 'inner-fourth_item' })
-    const childLeft = createElement('img', { class: 'inner-fourth_item-left', src: item.icon })
-    const childRight = createElement('div', { class: 'inner-fourth_item-right' })
-    const childRightName = createElement('div', { class: 'item-right-name' }, item.name)
-    const childLeftMobile = createElement('img', { class: 'inner-fourth_item-left_mobile', src: item.icon })
-    childRightName.append(childLeftMobile)
-    const childProject = createElement('div', { class: 'item-right-info' })
-    childProject.append(createElement('div', { class: 'item-right-title' }, chapters[3].projectDesc + ':'), createElement('div', { class: 'item-right-content' }, item.projectDesc))
-    const childResponsibility = createElement('div', { class: 'item-right-info' })
-    childResponsibility.append(createElement('div', { class: 'item-right-title' }, chapters[3].responsibilityDesc + ':'), createElement('div', { class: 'item-right-content' }, item.responsibilityDesc))
-    const childKeyPoints = createElement('div', { class: 'item-right-info' })
-    childKeyPoints.append(createElement('div', { class: 'item-right-title' }, chapters[3].keyPoints + ':'))
-    const childKeyPointsContent = createElement('div', { class: 'item-right-content' })
-    item.keyPoints.forEach((child, index) => {
-      childKeyPointsContent.append(createElement('div', {
-        'data-index': index + 1 + '.',
+  const fragmentFourth = document.createDocumentFragment();
+  chapters[3].list.forEach((item,index) => {
+    fragmentFourth.appendChild(createElement('div', { class: 'inner-fourth_item' }))
+    fragmentFourth.childNodes[index].append(createElement('img', { class: 'inner-fourth_item-left', src: item.icon }),createElement('div', { class: 'inner-fourth_item-right' }))
+    fragmentFourth.childNodes[index].childNodes[1].append(createElement('div', { class: 'item-right-name' }, item.name),createElement('div', { class: 'item-right-info' }),createElement('div', { class: 'item-right-info' }),createElement('div', { class: 'item-right-info' }))
+    fragmentFourth.childNodes[index].childNodes[1].childNodes[0].appendChild(createElement('img', { class: 'inner-fourth_item-left_mobile', src: item.icon }))
+    fragmentFourth.childNodes[index].childNodes[1].childNodes[1].append(createElement('div', { class: 'item-right-title' }, chapters[3].projectDesc + ':'), createElement('div', { class: 'item-right-content' }, item.projectDesc))
+    fragmentFourth.childNodes[index].childNodes[1].childNodes[2].append(createElement('div', { class: 'item-right-title' }, chapters[3].responsibilityDesc + ':'), createElement('div', { class: 'item-right-content' }, item.responsibilityDesc))
+    fragmentFourth.childNodes[index].childNodes[1].childNodes[3].append(createElement('div', { class: 'item-right-title' }, chapters[3].keyPoints + ':'),createElement('div', { class: 'item-right-content' }))
+    item.keyPoints.forEach((child, i) => {
+      fragmentFourth.childNodes[index].childNodes[1].childNodes[3].childNodes[1].append(createElement('div', {
+        'data-index': i + 1 + '.',
         class: 'keypoint-item'
       }, child))
     })
-    childKeyPoints.append(childKeyPointsContent)
-    childRight.append(childRightName, childProject, childResponsibility, childKeyPoints)
-    parent.append(childLeft, childRight)
-    document.querySelector('.inner-fourth>.inner-fourth_content').append(parent)
   })
+  document.querySelector('.inner-fourth>.inner-fourth_content').append(fragmentFourth)
 
   // 第五页
   document.querySelector('.inner-fifth>.inner-fifth_title').innerText = chapters[4].title
-  chapters[4].list.forEach(item => {
-    const parent = createElement('div', { class: 'inner-fifth_item' })
-    const childRight = createElement('div', { class: 'inner-fifth_item-right' })
-    const childRightName = createElement('div', { class: 'item-right-name' }, item.name)
-    const childProject = createElement('div', { class: 'item-right-info' })
-    childProject.append(createElement('div', { class: 'item-right-title' }, chapters[4].projectDesc + ':'), createElement('div', { class: 'item-right-content' }, item.projectDesc))
-    const childResponsibility = createElement('div', { class: 'item-right-info' })
-    childResponsibility.append(createElement('div', { class: 'item-right-title' }, chapters[4].responsibilityDesc + ':'), createElement('div', { class: 'item-right-content' }, item.responsibilityDesc))
-    const childKeyPoints = createElement('div', { class: 'item-right-info' })
-    childKeyPoints.append(createElement('div', { class: 'item-right-title' }, chapters[4].keyPoints + ':'))
-    const childKeyPointsContent = createElement('div', { class: 'item-right-content' })
-    item.keyPoints.forEach((child, index) => {
-      childKeyPointsContent.append(createElement('div', {
-        'data-index': index + 1 + '.',
+  const fragmentFifth = document.createDocumentFragment();
+  chapters[4].list.forEach((item,index) => {
+    fragmentFifth.appendChild(createElement('div', { class: 'inner-fifth_item' }))
+    fragmentFifth.childNodes[index].appendChild(createElement('div', { class: 'inner-fifth_item-right' }))
+    fragmentFifth.childNodes[index].childNodes[0].append(createElement('div', { class: 'item-right-name' }, item.name), createElement('div', { class: 'item-right-info' }), createElement('div', { class: 'item-right-info' }), createElement('div', { class: 'item-right-info' }))
+    fragmentFifth.childNodes[index].childNodes[0].childNodes[1].append(createElement('div', { class: 'item-right-title' }, chapters[4].projectDesc + ':'), createElement('div', { class: 'item-right-content' }, item.projectDesc))
+    fragmentFifth.childNodes[index].childNodes[0].childNodes[2].append(createElement('div', { class: 'item-right-title' }, chapters[4].responsibilityDesc + ':'), createElement('div', { class: 'item-right-content' }, item.responsibilityDesc))
+    fragmentFifth.childNodes[index].childNodes[0].childNodes[3].append(createElement('div', { class: 'item-right-title' }, chapters[4].keyPoints + ':'), createElement('div', { class: 'item-right-content' }))
+    item.keyPoints.forEach((child, i) => {
+      fragmentFifth.childNodes[index].childNodes[0].childNodes[3].childNodes[1].appendChild(createElement('div', {
+        'data-index': i + 1 + '.',
         class: 'keypoint-item'
       }, child))
     })
-    childKeyPoints.append(childKeyPointsContent)
-    childRight.append(childRightName, childProject, childResponsibility, childKeyPoints)
-    parent.append(childRight)
-    document.querySelector('.inner-fifth>.inner-fifth_content').append(parent)
   })
+  document.querySelector('.inner-fifth>.inner-fifth_content').appendChild(fragmentFifth)
 
   // 第六页
+  const fragmentSixth = document.createDocumentFragment();
   const sixthDom = document.querySelector('.inner-sixth>.inner-sixth_content')
-  sixthDom.append(createElement('div', { class: 'inner-sixth_content-name' }, chapters[5].name), createElement('div', { class: 'inner-sixth_content-introduction' }, chapters[5].introduction), createElement('div', { class: 'inner-sixth_content-college' }, chapters[5].college), createElement('div', { class: 'inner-sixth_content-major' }, chapters[5].major))
-  const honourDom = createElement('div', { class: 'inner-sixth_content-honour' })
+  fragmentSixth.append(createElement('div', { class: 'inner-sixth_content-name' }, chapters[5].name), createElement('div', { class: 'inner-sixth_content-introduction' }, chapters[5].introduction), createElement('div', { class: 'inner-sixth_content-college' }, chapters[5].college), createElement('div', { class: 'inner-sixth_content-major' }, chapters[5].major), createElement('div', { class: 'inner-sixth_content-honour' }), createElement('div', { class: 'inner-sixth_content-time' }, chapters[5].time))
   chapters[5].list.forEach(item => {
-    honourDom.append(createElement('div', { class: 'honour-item' }, item))
+    fragmentSixth.childNodes[4].append(createElement('div', { class: 'honour-item' }, item))
   })
-  sixthDom.append(honourDom, createElement('div', { class: 'inner-sixth_content-time' }, chapters[5].time))
+  sixthDom.appendChild(fragmentSixth)
 }
 
 window.onload = initAni()
