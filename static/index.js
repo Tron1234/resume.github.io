@@ -67,7 +67,7 @@ function typing() {
       while (textIndex < text.length) {
         const str = text[textIndex] // 当前文字
         if (/[a-zA-Z0-9]/.test(str)) {
-          length += (fontSize / (languageStatus ? 1.5 : 2.4))
+          length += (fontSize / (languageStatus ? 1.5 : 2.3))
         } else {
           length += fontSize
         }

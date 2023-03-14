@@ -1,6 +1,6 @@
 export const selfAssessment_title = "Self-Assessment"
 export const introduce = "My name is Wang Zhuohua, 25 years old, currently working as a frontend development engineer. I use technologies such as Vue, Uniapp framework, WeChat Mini Program, and mainly engage in the development of mobile H5, WeChat public account, and hybrid App clients. I am good at handling web adaptive problems, compatibility issues with iOS/Android browsers and Apps, as well as WeChat public account JSSDK invocation issues."
-export const selfAssessment = "I have been in this industry for 3 years, during which I have worked on independent development of multi-end projects and mostly service-side projects. I have gained some technical experience and also discovered some of my own technical issues, and have been diving deep into the underlying principles. Many people may think that frontend development does not have technical difficulties, as most of the business code is on the backend. However, for me, someone who has learned backend programming in college but ended up in frontend development, the charm of frontend development lies in being able to see gorgeous styles and animation effects in real-time, which is what I look forward to, compared to the boring large amount of data."
+export const selfAssessment = "I have been in this industry for 4 years, during which I have worked on independent development of multi-end projects and mostly service-side projects. I have gained some technical experience and also discovered some of my own technical issues, and have been diving deep into the underlying principles. Many people may think that frontend development does not have technical difficulties, as most of the business code is on the backend. However, for me, someone who has learned backend programming in college but ended up in frontend development, the charm of frontend development lies in being able to see gorgeous styles and animation effects in real-time, which is what I look forward to, compared to the boring large amount of data."
 export const sendGift = "The gift,Please swipe up"
 export const peroration = "Thank you for reading!"
 
@@ -13,7 +13,7 @@ export const chapters = [{
     },
     {
       "title": "Work Experience",
-      "value": "3 years"
+      "value": "4 years"
     },
     {
       "title": "Date of Birth",
@@ -47,25 +47,15 @@ export const chapters = [{
   "title": "Work Experience",
   "list": [
     {
-      "time": "2022.10 - 2023.02",
+      "time": "2021.06 - 2023.03",
       "company": "Shenzhen Oriental Datang Information Technology Co., Ltd.",
       "jobName": "Web Front-end Engineer",
       "jobContent": [
-        "Maintained new requirements and bug fixes for the social security provident fund module of the EHR management system",
-        "Developed a cascading component for the EHR management system and embedded it into the list filtering component and table dynamic filtering column component",
-        `Developed the "XueWan" app based on uniapp and published it on various app stores`
-      ]
-    },
-    {
-      "time": "2021.07 - 2022.09",
-      "company": "Shiyun Technology (Shenzhen) Co., Ltd.",
-      "jobName": "Web Front-end Engineer",
-      "jobContent": [
-        "Maintained and iterated on the smart construction site web, app, and WeChat mini-program projects",
-        "Developed the IoT platform independently",
-        "Implemented the overall framework and component library of the front-end project based on the front-end specification architecture and UI design draft",
-        "Produced the POC smart patrol system",
-        "Developed the Navy Occupational English Interpretation AI Evaluation System"
+        "Developed cascading components for an EHR management system and embedded them into a list filtering component and a dynamic column filtering component for a table. Also responsible for maintaining the system and iterating on new requirements",
+        "Maintained and iterated on projects for a smart construction site on the web, app, and WeChat mini-program platforms",
+        "Independently developed an IoT platform",
+        "Produced a POC for a smart patrol system",
+        "Developed an AI evaluation system for interpreting English at sea"
       ]
     },
     {
@@ -77,6 +67,12 @@ export const chapters = [{
         "Conducted compatibility adaptation for multiple platform and system versions",
         "Cooperated with back-end developers to interface with API"
       ]
+    },
+    {
+      time: '2019.06 - 2020.03',
+      company: 'Jiujiang Jiamai Technology Co., Ltd.',
+      jobName: 'Mini Program Developer',
+      jobContent: ['Created prototypes and UI designs for the "Hui Xiaobao" WeChat mini-program', 'Independently developed all the interfaces for the WeChat mini-program and completed integration work with the backend', 'Integrated various functions such as WeChat payment, notifications, and SMS verification codes']
     }
   ]
 }, {
