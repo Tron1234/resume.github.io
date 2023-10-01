@@ -212,6 +212,7 @@ main {
 }
 
 .gift-title-content {
+  will-change: transform;
   height: 36px;
   transform-style: preserve-3d;
   text-align: center;
@@ -403,6 +404,7 @@ main {
 }
 
 .large-gift {
+  will-change: transform;
   transform: translateY(var(--centerDistance)) scale(var(--largeRate));
   transition: transform 1s ease-out calc(var(--boxSecond) / 2);
 }
@@ -425,6 +427,7 @@ main {
 }
 
 .small-gift {
+  will-change: transform;
   transition: transform 1s ease;
 }
 
@@ -551,6 +554,7 @@ main {
 }
 
 .article-end {
+  will-change: opacity;
   margin-top: 80px;
   font-size: 40px;
   letter-spacing: 0.12em;
@@ -560,6 +564,7 @@ main {
 }
 
 .control-box {
+  will-change: transform, opacity;
   position: fixed;
   right: 14px;
   top: 50%;
@@ -583,6 +588,7 @@ main {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  will-change: transform;
   transition: all 0.2s ease-in-out;
 }
 
@@ -998,6 +1004,7 @@ main {
 }
 
 .inner-third_content>.icon-box>.icon-style {
+  will-change: transform;
   width: 74px;
   height: 74px;
   display: flex;
